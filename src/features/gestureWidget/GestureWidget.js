@@ -9,7 +9,7 @@ const gestures = [
     "Shake Head",
     "Sweep"
 ]
-export default function SpeechWidget(props){
+export default function GestureWidget(props){
     return <Paper>
             <Typography variant="h4">Gesture</Typography>
             <FormControl sx={{ width: "100%" }}>

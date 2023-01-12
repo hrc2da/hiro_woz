@@ -6,6 +6,7 @@ import { updateTopView, updateTopViewCropped, updateSpeechPublisher, updateRosBr
 // can't use redux store b/c they won't be serializable
 export let speechPublisher = undefined;
 export let posePublisher = undefined;
+export let enablePublisher = undefined;
 export let rosBridge = undefined;
 export let topViewListener = undefined;
 export let topViewCroppedListener = undefined;
@@ -29,7 +30,7 @@ export function setupRosBridge(url,dispatch) {
     topViewListener = new ROSLIB.Topic({
         ros: rosBridge,
         name: '/hiro_dynamixel/encoded_top_view',
-        messageType: 'std_msgs/String'
+        messageType: 'sensor_msgs/CompressedImage'
     });
 
     topViewListener.subscribe(function(message) {
@@ -58,5 +59,11 @@ export function setupRosBridge(url,dispatch) {
         name: '/hiro_dynamixel/cartesian_target',
         messageType: 'std_msgs/String'
     });
+
+    enablePublisher = new ROSLIB.Topic({
+        ros: rosBridge,
+        name: '/hiro_dynamixel/hiro_joint_enable',
+        messageType: 'std_msgs/String'
+    })
 }
 

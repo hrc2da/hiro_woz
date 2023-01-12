@@ -8,18 +8,19 @@ import GestureWidget from '../gestureWidget/GestureWidget';
 
 export default function ControlView(props) {
     const ref = React.useRef(null);
-    const [movementWidth, setMovementWidth] = React.useState(100);
-    React.useEffect(() => {
-        setMovementWidth(0.9*ref.current.offsetWidth);
-      }, []);
+    const [movementWidth, setMovementWidth] = React.useState(640);
+    // React.useEffect(() => {
+    //     setMovementWidth(0.9*ref.current.offsetWidth);
+    //   }, []);
     return <Grid container spacing={2}>
         <Grid ref={ref} item xs={8}>
             <MovementWidget width={movementWidth} />  
         </Grid>
         <Grid item xs={4}>
             <Stack direction="column" spacing={2}>
-                <SpeechWidget />
                 <GestureWidget />
+                <SpeechWidget />
+                
             </Stack>
         </Grid>
         

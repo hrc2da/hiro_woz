@@ -11,15 +11,18 @@ const robotSlice = createSlice({
         'motorConfig': {
             'base': {
                 'speed': 0,
-                'punch': 0
+                'punch': 0,
+                'enabled': true
             },
             'shoulder': {
                 'speed': 0,
-                'punch': 0
+                'punch': 0,
+                'enabled': true
             },
             'elbow': {
                 'speed': 0,
-                'punch': 0
+                'punch': 0,
+                'enabled': true
             }
         },
         'dummy': 5
@@ -43,6 +46,11 @@ const robotSlice = createSlice({
         setBaseSpeed: (state, action) => {
             state.motorConfig.base.speed = action.payload
         },
+        setPower: (state, action) => {
+            state.motorConfig.base.enabled = action.payload;
+            state.motorConfig.shoulder.enabled = action.payload;
+            state.motorConfig.elbow.enabled = action.payload;
+        },
         setDummy: (state, action) => action.payload
     }
   });
@@ -56,9 +64,18 @@ export const selectRosBridge = (state) => state.robot.rosBridge;
 export const selectSpeechPublisher = (state) => state.robot.speechPublisher;
 export const selectBaseSpeed = (state) => state.robot.motorConfig.base.speed;
 export const selectBasePunch = (state) => state.robot.motorConfig.base.punch;
+//return true if any motor is enabled
+export const selectEnable = (state) => state.robot.motorConfig.base.enabled;
 
-const { setTopViewb64, setTopViewCroppedb64, setFrontViewb64, setRosBridge, setSpeechPublisher, setDummy } = robotSlice.actions;
 
+const { setTopViewb64, setTopViewCroppedb64, setFrontViewb64, setRosBridge, setSpeechPublisher, setDummy, setPower } = robotSlice.actions;
+
+
+export function updateMotorEnable(enable) {
+    return dispatch => {
+        dispatch(setPower(enable));
+    }
+}
 
 export function updateRosBridge(rosBridge) {
     console.log("setting the rosbridge")
@@ -82,8 +99,9 @@ export function updateSpeechPublisher(publisher) {
 
 
 export function updateTopView(b64img) {
+    console.log("Top View", b64img);
     return dispatch => {
-      dispatch(setTopViewb64(b64img));
+      dispatch(setTopViewb64(btoa(String.fromCharCode(...b64img))));
     }
 }
 
