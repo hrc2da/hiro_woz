@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 const gestureSlice = createSlice({
     name:  'gesture',
     initialState: {
-        'activeGesture': -1,
+        'activeGesture': {"id": 0, "name": undefined, "description": undefined, "points":[],"edges":[]},
         'gestures': []
     },
     reducers: {
