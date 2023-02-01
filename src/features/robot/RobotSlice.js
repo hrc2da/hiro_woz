@@ -8,6 +8,10 @@ const robotSlice = createSlice({
         'frontViewb64': '',
         'ros': undefined,
         'speechPublisher': undefined,
+        'rosBridgeStatus': false,
+        'rosBridgeError': null,
+        'vidBridgeStatus': false,
+        'vidBridgeError': null,
         'motorConfig': {
             'base': {
                 'speed': 0,
@@ -37,8 +41,13 @@ const robotSlice = createSlice({
         setFrontViewb64: (state, action) => {
             state.frontViewb64 = action.payload
         },
-        setRosBridge: (state, action) => {
-            state.rosBridge = action.payload
+        setRosBridgeStatus: (state, action) => {
+            state.rosBridgeStatus = action.payload.status,
+            state.rosBridgeError = action.payload.error
+        },
+        setVidBridgeStatus: (state, action) => {
+            state.vidBridgeStatus = action.payload.status,
+            state.vidBridgeError = action.payload.error
         },
         setSpeechPublisher: (state, action) => {
             state.speechPublisher = action.payload
@@ -60,7 +69,10 @@ export default robotSlice;
 export const selectTopViewb64 = (state) => state.robot.topViewb64;
 export const selectTopViewCroppedb64 = (state) => state.robot.topViewCroppedb64;
 export const selectFrontViewb64 = (state) => state.robot.frontViewb64;
-export const selectRosBridge = (state) => state.robot.rosBridge;
+export const selectRosBridgeStatus = (state) => state.robot.rosBridgeStatus;
+export const selectRosBridgeError = (state) => state.robot.rosBridgeError;
+export const selectVidBridgeStatus = (state) => state.robot.vidBridgeStatus;
+export const selectVidBridgeError = (state) => state.robot.vidBridgeError;
 export const selectSpeechPublisher = (state) => state.robot.speechPublisher;
 export const selectBaseSpeed = (state) => state.robot.motorConfig.base.speed;
 export const selectBasePunch = (state) => state.robot.motorConfig.base.punch;
@@ -68,7 +80,7 @@ export const selectBasePunch = (state) => state.robot.motorConfig.base.punch;
 export const selectEnable = (state) => state.robot.motorConfig.base.enabled;
 
 
-const { setTopViewb64, setTopViewCroppedb64, setFrontViewb64, setRosBridge, setSpeechPublisher, setDummy, setPower } = robotSlice.actions;
+const { setTopViewb64, setTopViewCroppedb64, setFrontViewb64, setRosBridgeStatus, setVidBridgeStatus, setSpeechPublisher, setDummy, setPower } = robotSlice.actions;
 
 
 export function updateMotorEnable(enable) {
@@ -77,11 +89,23 @@ export function updateMotorEnable(enable) {
     }
 }
 
-export function updateRosBridge(rosBridge) {
-    console.log("setting the rosbridge")
-    console.log(setRosBridge(rosBridge));
+// export function updateRosBridge(rosBridge) {
+//     console.log("setting the rosbridge")
+//     console.log(setRosBridge(rosBridge));
+//     return dispatch => {
+//       dispatch(setRosBridge(rosBridge));
+//     }
+// }
+
+export function updateRosBridgeStatus(status,error){
     return dispatch => {
-      dispatch(setRosBridge(rosBridge));
+        dispatch(setRosBridgeStatus({status:status, error:error}));
+    }
+}
+
+export function updateVidBridgeStatus(status,error){
+    return dispatch => {
+        dispatch(setVidBridgeStatus({status:status, error:error}));
     }
 }
 
@@ -99,7 +123,7 @@ export function updateSpeechPublisher(publisher) {
 
 
 export function updateTopView(b64img) {
-    console.log("Top View", b64img);
+    // console.log("Top View", b64img);
     return dispatch => {
       dispatch(setTopViewb64(btoa(String.fromCharCode(...b64img))));
     }
@@ -110,3 +134,4 @@ export function updateTopViewCropped(b64img) {
       dispatch(setTopViewCroppedb64(b64img));
     }
 }
+

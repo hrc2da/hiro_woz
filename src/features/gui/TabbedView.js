@@ -2,11 +2,17 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
-import {Tab, Tabs, Typography} from '@mui/material';
+import {Tab, Tabs, Typography, Stack, Paper} from '@mui/material';
 import PropTypes from 'prop-types';
 import {selectActiveTab, updateActiveTab} from './GuiSlice';
+import {selectGestureState} from '../gestureWidget/GestureSlice';
 import ControlView from './ControlView';
 import AnalysisView from './AnalysisView';
+import LoadProjectDialog from '../project/LoadProjectDialog';
+import SaveProjectDialog from '../project/SaveProjectDialog';
+import ConnectionDialog from '../robot/ConnectionDialog';
+import {selectProjectName} from '../project/ProjectSlice';
+import ROSLIB from 'roslib';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -44,21 +50,41 @@ function a11yProps(index) {
 
 export default function TabbedView(props) {
     const tabSelector = useSelector(selectActiveTab);
+    const gestureState = useSelector(selectGestureState);
+    const projectName = useSelector(selectProjectName);
     const titles = ['HIRO Control Panel', 'Garden Analysis', 'Help']
     const dispatch = useDispatch()
     const handleChange = (event, newValue) => dispatch(updateActiveTab(newValue));
     return (
     <div>
         <Box sx={{ width: '100%'}}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          {titles[tabSelector]}
-        </Typography>
+        <Stack direction="row" spacing={8}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            {titles[tabSelector]}: {projectName}
+            {/* <IconButton>
+              <DangerousIcon 
+                  style={{width:"100px", height:"100px", padding: "0px", color: "red"}}
+              />
+          </IconButton> */}
+          </Typography>
+          
+        </Stack>
+        
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Stack direction="row" spacing={1}>
                 <Tabs value={tabSelector} onChange={handleChange} aria-label="basic tabs example">
                     <Tab label="Control" {...a11yProps(0)} />
                     <Tab label="Analysis" {...a11yProps(1)} />
                     <Tab label="Help" {...a11yProps(2)} />
                 </Tabs>
+                <Paper style={{marginLeft: "auto"}} elevation={2}>
+                  <Stack direction="row" >
+                    <ConnectionDialog />
+                    <LoadProjectDialog />
+                    <SaveProjectDialog />
+                  </Stack>
+                </Paper>
+            </Stack>
             </Box>
             <TabPanel value={tabSelector} index={0}>
                 <ControlView />
@@ -69,6 +95,7 @@ export default function TabbedView(props) {
             <TabPanel value={tabSelector} index={2}>
                 Help
             </TabPanel>
+            
     </Box>
   </div>
   );

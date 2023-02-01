@@ -11,7 +11,7 @@ import {setupRosBridge} from './features/robot/rosbridge';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
-setupRosBridge('ws://localhost:9090',store.dispatch);
+// setupRosBridge('ws://192.168.1.81',store.dispatch);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
