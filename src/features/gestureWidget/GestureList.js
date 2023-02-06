@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectGestureList, selectActiveGesture, activateGesture, chooseLibraryGesture, selectPlaylistGestures, removeGestureFromPlaylist, moveGestureInPlaylist } from './GestureSlice';
 import GestureEditPanel from './GestureEditPanel';
 import {selectShowEditPanel, setShowEditPanelState} from '../gui/GuiSlice';
+import { gesturePublisher } from '../robot/rosbridge';
 
 export default function GestureList(props){
     // const [showEditPanel, setShowEditPanel] = React.useState(true);
@@ -102,7 +103,10 @@ export default function GestureList(props){
                                     </IconButton>
                                     <IconButton
                                         onClick={(e)=>{
-                                            console.log("play")
+                                            console.log(gesture);
+                                            let msg = {}
+                                            msg.data = JSON.stringify(gesture);
+                                            gesturePublisher.publish(msg);
                                         }
                                     }>
                                         <PlayIcon />

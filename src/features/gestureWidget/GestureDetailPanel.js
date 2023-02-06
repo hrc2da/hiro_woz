@@ -12,7 +12,7 @@ export default function GestureDetailPanel(props){
     const gesture = gestureList[props.gesture];
     const movementWidth = useSelector(selectMovementWidth);
     const [ref, bounds] = useMeasure()
-    console.log(bounds);
+    // console.log(bounds);
     const width = bounds.width;
     const height = 0.75*width;
     const movementHeight = movementWidth * 0.75;

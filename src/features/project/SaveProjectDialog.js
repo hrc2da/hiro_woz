@@ -6,6 +6,7 @@ import Popover from '@mui/material/Popover';
 import {selectProjectList, selectProjectName, updateProjectList, updateProjectName} from './ProjectSlice';
 import {listProjects, loadProject, saveProject} from '../robot/rosbridge';
 import {setGestureState, selectGestureState} from '../gestureWidget/GestureSlice';
+import {saveLocal, clearLocal} from '../../app/store';
 import ROSLIB from 'roslib';
 
 export default function SaveProjectDialog(props){
@@ -15,18 +16,19 @@ export default function SaveProjectDialog(props){
     const gestureState = useSelector(selectGestureState);
     const projectName = useSelector(selectProjectName);
     const [saveName, setSaveName] = React.useState(projectName);
+    
     const handleClick = (event) => {
-        let request = new ROSLIB.ServiceRequest({});
-        listProjects.callService(request, (result) => {
-            let projects = ["watson"]
-            if(result.names != undefined){
-                projects = result.names;
-            }
-            return dispatch(updateProjectList(projects));
+        // let request = new ROSLIB.ServiceRequest({});
+        // listProjects.callService(request, (result) => {
+        //     let projects = ["watson"]
+        //     if(result.names != undefined){
+        //         projects = result.names;
+        //     }
+        //     return dispatch(updateProjectList(projects));
             
-        }, (error) => {
-            console.log("error",error);
-        });
+        // }, (error) => {
+        //     console.log("error",error);
+        // });
       setAnchorEl(event.currentTarget);
     };
     
@@ -41,6 +43,7 @@ export default function SaveProjectDialog(props){
 
 
     return <React.Fragment>
+              
                 <Button aria-describedby={id} variant="outlined" onClick={handleClick}>
                 Save Project
                 </Button>
@@ -54,6 +57,13 @@ export default function SaveProjectDialog(props){
                     horizontal: 'left',
                 }}
                 >
+
+<Button aria-describedby={id} variant="outlined" onClick={saveLocal}>
+                Save Locally
+                </Button>
+                <Button aria-describedby={id} variant="outlined" onClick={clearLocal}>
+                Clear Local
+                </Button>
                 <Typography sx={{ p: 2 }}>Save Project As:</Typography>
                 <TextField 
                     id="save-project-name"

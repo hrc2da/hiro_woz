@@ -234,7 +234,7 @@ export default function MovementWidget(props){
                 step={1}
                 marks
                 valueLabelDisplay="on"
-                value={focusPoint && activeGesture.points && focusPoint != -1 ? activeGesture.points[parseInt(focusPoint.slice(0,-1))].z : targetHeight}
+                value={focusPoint && activeGesture.points && focusPoint != -1 && parseInt(focusPoint.slice(0,-1)) <= activeGesture.points.length ? activeGesture.points[parseInt(focusPoint.slice(0,-1))].z : targetHeight}
                 onChange={(e)=>handleUpdateHeight(e.target.value)}
             />
 
@@ -243,7 +243,7 @@ export default function MovementWidget(props){
         <Stack>
             <Stack direction="row">
                 <Slider sx ={{width:"540px", marginLeft:"55px"}}
-                    value={focusPoint && focusPoint != -1 ? activeGesture.points[parseInt(focusPoint.slice(0,-1))].rail : targetRail}
+                    value={focusPoint && activeGesture.points && focusPoint != -1 && parseInt(focusPoint.slice(0,-1)) <= activeGesture.points.length ? activeGesture.points[parseInt(focusPoint.slice(0,-1))].rail : targetRail}
                     min = {50}
                     max = {590}
                     onChange={(e)=>handleUpdateRail(e.target.value)}

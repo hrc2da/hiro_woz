@@ -13,6 +13,8 @@ export let rosBridge = undefined;
 export let vidBridge = undefined;
 export let topViewListener = undefined;
 export let topViewCroppedListener = undefined;
+var drop_frame_counter = 0;
+var top_view = undefined;
 
 export function closeRosBridges(){
     if(rosBridge != undefined){
@@ -62,11 +64,28 @@ export function setupVidBridge(url, dispatch, port="8080") {
     topViewListener = new ROSLIB.Topic({
         ros: vidBridge,
         name: '/hiro_dynamixel/encoded_top_view',
-        messageType: 'sensor_msgs/CompressedImage'
+        messageType: 'sensor_msgs/CompressedImage',
+        queue_length: 1,
+        throttle_rate: 100
     });
 
     topViewListener.subscribe(function(message) {
-        dispatch(updateTopView(message.data))
+        // console.log("drop_frame_counter",drop_frame_counter)
+        // if(drop_frame_counter % 1 == 0){
+            // console.log(message.data)
+            let charCode = '';
+            // let bytes = new Uint8Array( messsage.data );
+            let bytes = message.data;
+            let len = bytes.length;
+            for (let i = 0; i < len; i++) {
+                charCode += String.fromCharCode( bytes[ i ] );
+            }
+            // let charCode = String.fromCharCode(...message.data)
+            // console.log(charCode);
+            top_view = btoa(charCode);
+            dispatch(updateTopView(top_view))
+        // }
+        // drop_frame_counter += 1;
     });
 
 }

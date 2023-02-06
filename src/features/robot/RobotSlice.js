@@ -122,10 +122,10 @@ export function updateSpeechPublisher(publisher) {
 }
 
 
-export function updateTopView(b64img) {
+export function updateTopView(img) {
     // console.log("Top View", b64img);
     return dispatch => {
-      dispatch(setTopViewb64(btoa(String.fromCharCode(...b64img))));
+      dispatch(setTopViewb64(img));
     }
 }
 
