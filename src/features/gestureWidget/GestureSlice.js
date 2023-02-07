@@ -186,6 +186,14 @@ const gestureSlice = createSlice({
         setPlaylistName: (state, action) => {
             state.playlistName = action.payload
         },
+        clearPlaylist: (state) => {
+            state.playlist = []
+            state.playlistName = undefined
+        },
+        loadPlaylist: (state, action) => {
+            state.playlist = state.playlistStore[action.payload]
+            state.playlistName = action.payload
+        },
         addPlaylistToStore: (state, action) => {
             state.playlistStore[action.payload.name] = action.payload.playlist;
         },
@@ -204,10 +212,11 @@ export const selectPlaylistGestures = (state) => state.gesture.playlist;
 export const selectSelectedLibraryGesture = (state) => state.gesture.selectedLibraryGesture;
 export const selectPlaylistName = (state) => state.gesture.playlistName;
 export const selectGestureState = (state) => state.gesture;
+export const selectPlaylistStore = (state) => state.gesture.playlistStore;
 const { setState, setActiveGesture, setFocusPoint, addActivePoint, removeActivePoint,
         updateActivePoint, updateActivePointApproach, reorderPoints, clearActiveGesture, 
         addGesture, updateGesture, addToPlaylist, removeFromPlaylist, reorderPlaylist,
-        setSelectedLibraryGesture,setPlaylistName, addPlaylistToStore,
+        setSelectedLibraryGesture,setPlaylistName, addPlaylistToStore, clearPlaylist, loadPlaylist,
         setDummy } = gestureSlice.actions;
 
 
@@ -340,5 +349,17 @@ export function moveGestureInPlaylist(indexToMove, newIndex) {
             indexToMove: indexToMove,
             newIndex: newIndex
         }));
+    }
+}
+
+export function resetPlaylist() {
+    return dispatch => {
+        dispatch(clearPlaylist());
+    }
+}
+
+export function loadPlaylistFromStore(name) {
+    return dispatch => {
+        dispatch(loadPlaylist(name));
     }
 }

@@ -57,7 +57,7 @@ export default function TabbedView(props) {
     const handleChange = (event, newValue) => dispatch(updateActiveTab(newValue));
     return (
     <div>
-        <Box sx={{ width: '100%'}}>
+        <Box sx={{ width: '100%', minWidth: "1000px"}}>
         <Stack direction="row" spacing={8}>
           <Typography variant="h4" component="h1" gutterBottom>
             {titles[tabSelector]}: {projectName}

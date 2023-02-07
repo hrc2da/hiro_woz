@@ -14,10 +14,10 @@ export default function ControlView(props) {
     //     setMovementWidth(0.9*ref.current.offsetWidth);
     //   }, []);
     return <Grid container spacing={2}>
-        <Grid ref={ref} item xs={8}>
+        <Grid ref={ref} item xs={7}>
             <MovementWidget width={movementWidth} />  
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
             <Stack direction="column" spacing={2}>
                 {/* <IconButton
                     
