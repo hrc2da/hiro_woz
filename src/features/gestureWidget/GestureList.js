@@ -87,7 +87,7 @@ export default function GestureList(props){
                                     component="label"
                                     style={{backgroundColor: "green"}}
                                     onClick={()=>{
-                                        if(playList.length <= 0){
+                                        if(playlistGestures.length <= 0){
                                             console.log("Playlist is empty!");
                                             return;
                                         }
@@ -95,7 +95,7 @@ export default function GestureList(props){
                                             console.log("Playlist name is empty!");
                                             return;
                                         }
-                                        dispatch(savePlaylist(playlistName,playList))
+                                        dispatch(savePlaylist(playlistName,playlistGestures))
                                     }}
                                     >
                                     <SaveIcon />
