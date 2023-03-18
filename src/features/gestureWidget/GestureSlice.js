@@ -268,6 +268,7 @@ export function updatePointApproach(id,approach) {
 export function clearPoints() {
     return dispatch => {
         dispatch(clearActiveGesture());
+        dispatch(setFocusPoint(-1));
     }
 }
 
@@ -298,6 +299,7 @@ export function replaceGesture(index,gesture) {
 export function activateGesture(gesture) {
     return dispatch => {
         dispatch(setActiveGesture(gesture));
+        dispatch(setFocusPoint(-1));
     }
 }
 
