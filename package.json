@@ -18,7 +18,7 @@
     "react-dom": "latest",
     "react-redux": "^8.0.2",
     "react-scripts": "latest",
-    "react-use-measure": "latest",
+    "react-use-measure": "^2.1.1",
     "roslib": "^1.3.0"
   },
   "browserslist": {

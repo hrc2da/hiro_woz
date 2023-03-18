@@ -53,7 +53,7 @@ export default function GestureList(props){
                             open={showEditPanel}
                             // onClose={()=>setShowEditPanel(false)}
                         >
-                            <GestureEditPanel show={showEditPanel} handleClose = {()=>dispatch(setShowEditPanelState(false))}/>
+                            <GestureEditPanel robot={props.robot} show={showEditPanel} handleClose = {()=>dispatch(setShowEditPanelState(false))}/>
                         </Drawer>
     const playlistMenu = <React.Fragment>
                             <Stack 

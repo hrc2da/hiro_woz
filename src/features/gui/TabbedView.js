@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import {selectActiveTab, updateActiveTab} from './GuiSlice';
 import {selectGestureState} from '../gestureWidget/GestureSlice';
 import ControlView from './ControlView';
-import AnalysisView from './AnalysisView';
+import BlossomView from './BlossomView';
 import LoadProjectDialog from '../project/LoadProjectDialog';
 import SaveProjectDialog from '../project/SaveProjectDialog';
 import ConnectionDialog from '../robot/ConnectionDialog';
@@ -73,8 +73,8 @@ export default function TabbedView(props) {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Stack direction="row" spacing={1}>
                 <Tabs value={tabSelector} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Control" {...a11yProps(0)} />
-                    <Tab label="Analysis" {...a11yProps(1)} />
+                    <Tab label="Hiro" {...a11yProps(0)} />
+                    <Tab label="Blossom" {...a11yProps(1)} />
                     <Tab label="Help" {...a11yProps(2)} />
                 </Tabs>
                 <Paper style={{marginLeft: "auto"}} elevation={2}>
@@ -90,7 +90,7 @@ export default function TabbedView(props) {
                 <ControlView />
             </TabPanel>
             <TabPanel value={tabSelector} index={1}>
-                <AnalysisView />
+                <BlossomView />
             </TabPanel>
             <TabPanel value={tabSelector} index={2}>
                 Help

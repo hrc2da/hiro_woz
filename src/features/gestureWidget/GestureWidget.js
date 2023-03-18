@@ -25,7 +25,7 @@ export default function GestureWidget(props){
     
     return <Paper>
             
-            <GestureList />
+            <GestureList robot={props.robot}/>
             <Divider />
             <Typography 
                 style={{marginTop: "auto", marginBottom: "auto", backgroundColor: "rgb(85 108 214 / 50%)", padding: "10px"}} 

@@ -6,6 +6,7 @@ export let speechPublisher = undefined;
 export let posePublisher = undefined;
 export let gesturePublisher = undefined;
 export let enablePublisher = undefined;
+export let blossomPublisher = undefined;
 export let saveProject = undefined;
 export let loadProject = undefined;
 export let listProjects = undefined;
@@ -13,6 +14,7 @@ export let rosBridge = undefined;
 export let vidBridge = undefined;
 export let topViewListener = undefined;
 export let topViewCroppedListener = undefined;
+
 var drop_frame_counter = 0;
 var top_view = undefined;
 
@@ -133,10 +135,16 @@ export function setupRosBridge(url, dispatch, port="9090") {
         messageType: 'std_msgs/String'
     });
 
+    blossomPublisher = new ROSLIB.Topic({
+        ros: rosBridge,
+        name: '/hiro_dynamixel/blossom',
+        messageType: 'hiro_msgs/BlossomPose'
+    });
+
     saveProject = new ROSLIB.Topic({
         ros: rosBridge,
         name: '/hiro_dynamixel/save_project',
-        messageTYpe: 'std_msgs/String'
+        messageType: 'std_msgs/String'
     });
 
     loadProject = new ROSLIB.Service({
@@ -150,6 +158,8 @@ export function setupRosBridge(url, dispatch, port="9090") {
         name: '/hiro_dynamixel/list_projects',
         serviceType: 'hiro_msgs/ListProjects'
     })
+
+
 }
 
 
